@@ -15,7 +15,6 @@ public record SoilNutrients(
 );
 
 public record SiloData(
-    string SiloId,
     double FillLevelPercent,
     double AvgTempCelsius,
     double Co2Ppm
