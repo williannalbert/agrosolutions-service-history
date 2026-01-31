@@ -1,4 +1,4 @@
-﻿using AgroSolutions.History.Domain.ValueObjects;
+﻿using AgroSolutions.History.Domain.ValueObjects.SensorData;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;

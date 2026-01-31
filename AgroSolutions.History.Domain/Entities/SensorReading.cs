@@ -1,5 +1,5 @@
 ﻿using AgroSolutions.History.Domain.Enums;
-using AgroSolutions.History.Domain.ValueObjects;
+using AgroSolutions.History.Domain.ValueObjects.SensorData;
 
 namespace AgroSolutions.History.Domain.Entities;
 

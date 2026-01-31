@@ -1,4 +1,4 @@
-﻿using AgroSolutions.History.Application.DTOs;
+﻿using AgroSolutions.History.Application.DTOs.Requests;
 using AgroSolutions.History.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +31,20 @@ public class HistoryController : ControllerBase
         catch (Exception ex) 
         {
             return StatusCode(500, new { error = "Erro interno ao processar leitura.", details = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] GetReadingsQuery query)
+    {
+        try
+        {
+            var result = await _sensorService.GetReadingsAsync(query);
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
 }
