@@ -41,6 +41,12 @@ public class ErrorHandlingMiddleware
                 response.ErrorType = "DomainValidation";
                 _logger.LogWarning("Violação de regra de domínio: {Message}", domainEx.Message);
                 break;
+            case ArgumentException argEx:
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                response.Message = argEx.Message;
+                response.ErrorType = "InvalidArguments";
+                _logger.LogWarning("Argumento inválido: {Message}", argEx.Message);
+                break;
             default:
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 response.Message = "Ocorreu um erro interno no servidor.";
