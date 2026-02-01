@@ -9,6 +9,7 @@ using AgroSolutions.History.Domain.Exceptions;
 using AgroSolutions.History.Domain.Interfaces;
 using AgroSolutions.History.Domain.ValueObjects.Filters;
 using AgroSolutions.History.Domain.ValueObjects.SensorData;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
 namespace AgroSolutions.History.Application.Services;
@@ -16,12 +17,17 @@ namespace AgroSolutions.History.Application.Services;
 public class SensorService : ISensorService
 {
     private readonly ISensorRepository _repository;
-    public SensorService(ISensorRepository repository)
+    private readonly ILogger<SensorService> _logger;
+    public SensorService(ISensorRepository repository, ILogger<SensorService> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
     public async Task<ReadingResponse> RegisterReadingAsync(CreateReadingRequest request)
     {
+        _logger.LogInformation("Iniciando registro de sensor. Sensor: {SensorId}, Tipo: {Type}",
+            request.SensorId, request.TypeSensor);
+
         if (!Enum.TryParse<SensorType>(request.TypeSensor, true, out var sensorTypeEnum))
         {
             throw new InvalidSensorTypeException($"Tipo de sensor inválido: {request.TypeSensor}");
@@ -38,6 +44,8 @@ public class SensorService : ISensorService
         );
 
         await _repository.AddAsync(reading);
+
+        _logger.LogInformation("Sensor registrado com sucesso. ID Gerado: {Id}", reading.Id);
 
         return new ReadingResponse(
             reading.Id, 

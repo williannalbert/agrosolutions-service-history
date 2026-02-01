@@ -15,14 +15,13 @@ public static class SensorDataMapper
             SensorType.Solo => MapSoil(data),
             SensorType.Silo => MapSilo(data),
             SensorType.Meteorologica => MapWeather(data),
-            _ => throw new NotImplementedException($"Mapper não implementado para: {type}")
+            _ => throw new InvalidSensorTypeException($"Mapper não implementado para: {type}")
         };
     }
 
     private static SoilData MapSoil(JsonElement data)
     {
         var dto = data.Deserialize<SoilDataDto>();
-        // Aqui já usamos uma Exception personalizada (veremos abaixo)
         if (dto == null) throw new InvalidSensorDataException("Dados do solo inválidos ou mal formatados.");
 
         return new SoilData(
