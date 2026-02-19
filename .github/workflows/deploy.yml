@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: sa-east-1                   
   ECR_REPOSITORY: agrosolutions-history   
-  EKS_CLUSTER_NAME: agro-cluster          
+  EKS_CLUSTER_NAME: agrosolutions-eks-cluster          
 
 jobs:
   deploy:
@@ -50,5 +50,7 @@ jobs:
         MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING_PROD }}
         ELASTIC_URI: ${{ secrets.ELASTIC_URI_PROD }}
       run: |
+        kubectl get namespace history-context || kubectl create namespace history-context
+        
         envsubst < k8s/deployment.yaml | kubectl apply -f -
         kubectl apply -f k8s/service.yaml
