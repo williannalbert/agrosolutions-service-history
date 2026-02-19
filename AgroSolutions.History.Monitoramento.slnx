@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AgroSolutions.History.API/AgroSolutions.History.API.csproj" />
+  <Project Path="AgroSolutions.History.Application/AgroSolutions.History.Application.csproj" />
+  <Project Path="AgroSolutions.History.Domain/AgroSolutions.History.Domain.csproj" />
+  <Project Path="AgroSolutions.History.Infrastructure/AgroSolutions.History.Infrastructure.csproj" />
+</Solution>

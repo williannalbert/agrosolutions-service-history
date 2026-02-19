@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: history-api
+  labels:
+    app: history-api
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: history-api
+  template:
+    metadata:
+      labels:
+        app: history-api
+    spec:
+      containers:
+      - name: history-api
+        image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+          
+        - name: MongoDbSettings__ConnectionString
+          value: "$MONGO_CONNECTION_STRING"
+        - name: MongoDbSettings__DatabaseName
+          value: "AgroHistoryDb"
+          
+        - name: ElasticConfiguration__Uri
+          value: "$ELASTIC_URI"
+          
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
