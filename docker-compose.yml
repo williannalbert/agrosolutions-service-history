@@ -1,37 +1,6 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: agri_iot_mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=senha123
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - agro-net  
-
-  mongo-express:
-    image: mongo-express
-    container_name: agri_iot_gui
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=senha123
-      - ME_CONFIG_MONGODB_URL=mongodb://admin:senha123@mongodb:27017/
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=senha123
-    depends_on:
-      - mongodb
-    networks:
-      - agro-net 
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
     container_name: elasticsearch-agro
@@ -75,16 +44,14 @@ services:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - MongoDbSettings__ConnectionString=mongodb://admin:senha123@mongodb:27017
+      - MongoDbSettings__ConnectionString=mongodb://admin:senha@host.docker.internal:27017
       - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
-      - mongodb
       - elasticsearch
     networks:
       - agro-net
 
 volumes:
-  mongo-data:
   elastic_data:
     driver: local
 
