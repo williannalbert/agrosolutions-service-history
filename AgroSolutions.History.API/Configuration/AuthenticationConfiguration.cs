@@ -32,7 +32,8 @@ public static class AuthenticationConfiguration
                     ValidIssuers = new[]
                     {
                         jwtSettings["Authority"],
-                        jwtSettings["Authority"]?.Replace("keycloak:8080", "localhost:8080")
+                        jwtSettings["Authority"]?.Replace("keycloak:8080", "localhost:8080"),
+                        "http://localhost:8080/realms/agrosolutions"
                     },
                     ValidateAudience = true,
                     ValidAudiences = new[] { jwtSettings["Audience"] },
