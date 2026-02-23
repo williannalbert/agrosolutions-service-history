@@ -49,6 +49,8 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING_PROD }}
         ELASTIC_URI: ${{ secrets.ELASTIC_URI_PROD }}
+        JWT_AUTHORITY: ${{ secrets.JWT_AUTHORITY_PROD }}
+        JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE_PROD }}
       run: |
         kubectl get namespace history-context || kubectl create namespace history-context
         

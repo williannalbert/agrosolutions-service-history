@@ -35,6 +35,11 @@ spec:
         - name: ElasticConfiguration__Uri
           value: "$ELASTIC_URI"
           
+        - name: Jwt__Authority
+          value: "$JWT_AUTHORITY"
+        - name: Jwt__Audience
+          value: "$JWT_AUDIENCE"
+          
         resources:
           requests:
             memory: "128Mi"
