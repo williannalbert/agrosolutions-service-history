@@ -28,6 +28,8 @@ public static class ApiConfiguration
 
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.AddApplicationServices();
+
+        builder.Services.AddAuthenticationConfiguration(builder.Configuration);
     }
 
     public static void UseApiConfiguration(this WebApplication app)
@@ -45,7 +47,7 @@ public static class ApiConfiguration
         app.UseHttpsRedirection();
         app.UseCors("AllowAll");
 
-        //app.UseAuthentication(); 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

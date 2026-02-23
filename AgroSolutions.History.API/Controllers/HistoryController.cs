@@ -1,9 +1,11 @@
 ﻿using AgroSolutions.History.Application.DTOs.Requests;
 using AgroSolutions.History.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgroSolutions.History.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class HistoryController : ControllerBase
