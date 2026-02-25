@@ -10,6 +10,8 @@ public static class AuthenticationConfiguration
         IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection("Jwt");
+        var authorityUrl = jwtSettings["Authority"];
+        var audience = jwtSettings["Audience"];
 
         services
             .AddAuthentication(options =>
@@ -19,24 +21,26 @@ public static class AuthenticationConfiguration
             })
             .AddJwtBearer(options =>
             {
-                options.Authority = jwtSettings["Authority"];
-                options.Audience = jwtSettings["Audience"];
+                options.Authority = authorityUrl;
+                options.Audience = audience;
                 options.RequireHttpsMetadata = false;
 
-                options.MetadataAddress = $"{jwtSettings["Authority"]}/.well-known/openid-configuration";
+                options.MetadataAddress = $"{authorityUrl}/.well-known/openid-configuration";
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
+
                     ValidateIssuer = true,
                     ValidIssuers = new[]
                     {
-                        jwtSettings["Authority"],
-                        jwtSettings["Authority"]?.Replace("keycloak:8080", "localhost:8080"),
-                        "http://localhost:8080/realms/agrosolutions"
+                        authorityUrl, 
+                        "http://localhost:8080/realms/agrosolutions" 
                     },
+
                     ValidateAudience = true,
-                    ValidAudiences = new[] { jwtSettings["Audience"] },
+                    ValidAudiences = new[] { audience },
+
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                 };
