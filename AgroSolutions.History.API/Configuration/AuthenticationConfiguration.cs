@@ -34,8 +34,9 @@ public static class AuthenticationConfiguration
                     ValidateIssuer = true,
                     ValidIssuers = new[]
                     {
-                        authorityUrl, 
-                        "http://localhost:8080/realms/agrosolutions" 
+                        authorityUrl,
+                        "http://localhost:8080/realms/agrosolutions",
+                        "http://keycloak-service.agrosolutions-identity:8080/realms/agrosolutions"
                     },
 
                     ValidateAudience = true,
